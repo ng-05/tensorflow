@@ -864,7 +864,7 @@ Status RunPjRtExecutable(
                       pjrt_client->LookupAddressableDevice(pjrt_device_id));
 
   gpu::GpuServingDeviceSelectorResource* device_selector_resource = nullptr;
-  if (device_type == DEVICE_GPU && gpu::kUseGpuServingDeviceSelector) {
+  if (device_type == DEVICE_GPU) {
     auto rm = ctx->resource_manager();
     TF_RETURN_IF_ERROR(rm->LookupOrCreate<
                        gpu::GpuServingDeviceSelectorResource>(
