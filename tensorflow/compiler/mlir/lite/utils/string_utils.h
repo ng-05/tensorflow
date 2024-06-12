@@ -22,25 +22,23 @@ limitations under the License.
 #include <limits>
 #include <vector>
 
-#include "absl/status/status.h"
-
 namespace mlir::TFL {
 
 constexpr uint64_t kDefaultMaxLength = std::numeric_limits<int>::max();
 
-class MiniDynamicBuffer {
+class SimpleDynamicBuffer {
  public:
-  explicit MiniDynamicBuffer(size_t max_length = kDefaultMaxLength)
+  explicit SimpleDynamicBuffer(size_t max_length = kDefaultMaxLength)
       : offset_({0}), max_length_(max_length) {}
 
   // Add string to dynamic buffer by resizing the buffer and copying the data.
-  absl::Status AddString(const char* str, size_t len);
+  bool AddString(const char* str, size_t len);
 
   // Fill content into a buffer and returns the number of bytes stored.
   // The function allocates space for the buffer but does NOT take ownership.
   int WriteToBuffer(char** buffer);
 
- private:
+ protected:
   // Data buffer to store contents of strings, not including headers.
   std::vector<char> data_;
   // Offset of the starting index of each string in data buffer.
@@ -54,6 +52,23 @@ class MiniDynamicBuffer {
   // avoid a change in behavior.
   const size_t max_length_;
 };
+
+// Convenient structure to store string pointer and length. Note that
+// methods on MiniDynamicBuffer enforce that the whole buffer (and by extension
+// every contained string) is of max length (2ul << 30) - 1. See
+// string_util.cc for more info.
+typedef struct {
+  const char* str;
+  size_t len;
+} StringRef;
+
+// Return num of strings in a String tensor.
+int GetStringCount(const void* raw_buffer);
+
+// Get String pointer and length of index-th string in tensor.
+// NOTE: This will not create a copy of string data.
+StringRef GetString(const void* raw_buffer, int string_index);
+
 }  // namespace mlir::TFL
 
 #endif  // TENSORFLOW_COMPILER_MLIR_LITE_UTILS_STRING_UTILS_H_
