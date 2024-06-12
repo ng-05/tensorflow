@@ -597,6 +597,7 @@ cc_library(
         "@local_xla//xla:status_macros",
         "@local_xla//xla/client:local_client",
         "@local_xla//xla/pjrt:pjrt_client",
+        "@local_xla//xla/pjrt:pjrt_common",
         "@local_xla//xla/pjrt:pjrt_future",
         "@local_xla//xla/pjrt:pjrt_stream_executor_client",
         "@local_xla//xla/pjrt:tracked_device_buffer",
@@ -634,6 +635,7 @@ tf_cc_test(
         "@local_tsl//tsl/platform:status",
         "@local_tsl//tsl/platform:statusor",
         "@local_xla//xla/pjrt:pjrt_client",
+        "@local_xla//xla/pjrt:pjrt_common",
         "@local_xla//xla/pjrt:tfrt_cpu_pjrt_client",
         "@local_xla//xla/tests:literal_test_util",
     ],
@@ -1681,6 +1683,7 @@ cc_library(
         "@com_google_absl//absl/status",
         "@local_tsl//tsl/framework:device_id_utils",
         "@local_xla//xla/pjrt:pjrt_client",
+        "@local_xla//xla/pjrt:pjrt_common",
         "@local_xla//xla/tsl/c:tsl_status_internal",
     ],
 )

@@ -69,6 +69,7 @@ cc_library(
         "@local_tsl//tsl/platform:protobuf",
         "@local_tsl//tsl/platform:statusor",
         "@local_xla//xla/pjrt:pjrt_client",
+        "@local_xla//xla/pjrt:pjrt_common",
         "@tf_runtime//:hostcontext",
         "@tf_runtime//:support",
         "@tf_runtime//:tensor_alwayslink",
